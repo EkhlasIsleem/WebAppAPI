@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AspCoreAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class BookController : ControllerBase
     {
@@ -35,6 +35,11 @@ namespace AspCoreAPI.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             return Ok(await Mediator.Send(new GetBookById { Id = id }));
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetByTitleOrAuthOrYear(string title,string author,string year)
+        {
+            return Ok(await Mediator.Send(new SearchingForBook { Title = title, Author= author, Year= year }));
         }
     
         [HttpDelete("{id}")]
